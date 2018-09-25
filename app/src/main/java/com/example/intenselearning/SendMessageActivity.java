@@ -13,6 +13,7 @@ import org.w3c.dom.Text;
 public class SendMessageActivity extends AppCompatActivity {
 
     private Button buttonSend;
+    private Button buttonShare;
     private EditText editTextMessage;
     public static final String EXTRA_SENT_MESSAGE = "the message";
 
@@ -39,10 +40,25 @@ public class SendMessageActivity extends AppCompatActivity {
                 startActivity(intentSendMessage);
             }
         });
+
+        buttonShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //make intent with action
+                Intent intentShare = new Intent(Intent.ACTION_SEND);
+                //set the data type of the stuff we are packaging away
+                intentShare.setType("text/plain");
+                //put the extra with the message
+                intentShare.putExtra(EXTRA_SENT_MESSAGE, editTextMessage.getText().toString());
+                //start activity
+                startActivity(intentShare);
+            }
+        });
     }
 
     private void wireWidgets() {
         buttonSend = findViewById(R.id.button_main_identification);
+        buttonShare = findViewById(R.id.button_sendMessage_shareButton);
         editTextMessage = findViewById(R.id.editText_sendMessage_msg);
     }
 }
